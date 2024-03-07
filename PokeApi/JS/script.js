@@ -63,7 +63,7 @@ const dibujarPokemon = () => {
 
     let input$$ = document.createElement("input");
     input$$.className = "input-buscarPokemon";
-    input$$.placeholder = "Busca el Pokemon o el tipo =)";
+    input$$.placeholder = "Busca el Pokemon o el Tipo";
     divBuscador$$.appendChild(input$$);
 
     input$$.addEventListener("input", () => buscarPokemon(input$$.value, resultadoArray));
@@ -75,11 +75,14 @@ const buscarPokemon = (filtro, results) => {
     //Transformamos el texto a minusculas.
     let textoInput = filtro.toLowerCase();
 
-    //Filtramos lo que son los pokemons por nombre y por tipo.
-    let filtrarPokemon = results.filter((pokemon) => pokemon.name.includes(textoInput) || pokemon.types[0].type.name.includes(textoInput));
+    //MAPEAMOS para que pongamos el formato correctamente
+    var pokemonMapeado = mapeadoPokemon(results);
 
-    pokemon = mapeadoPokemon(filtrarPokemon);
-    pintarResultado(pokemon);
+    //Filtramos lo que son los pokemons por nombre y por tipo.
+    let filtrarPokemon = pokemonMapeado.filter((pokemon) => pokemon.name.includes(textoInput) || pokemon.type.includes(textoInput));
+
+    //Pintamos el resultado para que filtre los divs con el nuevo filtro de Pokemons.
+    pintarResultado(filtrarPokemon);
 }
 
 //Inizializamos todo.
